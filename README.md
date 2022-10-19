@@ -26,3 +26,12 @@ Desarrollo Backend: Matias Chavez
 ## Video explicativo:
 
 link: xxxxxxxxxxxxxxxx
+
+## Pruebas:
+|| Paso N°. ||     Descripcion     || Resultado                                        || Ok/Error
+
+| 1. | Subir Post                   | El posteo debe ser visible para todos             | OK
+
+| 2. | Editar Nombre Usuario        | La base de datos se actualiza con el nuevo nombre | OK
+
+| 3. | Cargar registro completo     | Devolver pagina de Logueo                         | OK
