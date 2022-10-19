@@ -4,14 +4,12 @@ from django.contrib.auth.views import LogoutView
 
 
 urlpatterns = [
-    path('', index),
-    path('recetas/',recetas),
+    path('home', home),
     path('about/',about),
-    path('create_autores/',create_autores),
     path('login/', login_request),
     path('perfil/',perfil),
     path('registro/',registro),
-    path('logout/', LogoutView.as_view(template_name = 'index.html'), name="Logout" ),
+    path('logout/', LogoutView.as_view(template_name = 'home.html'), name="Logout" ),
     path('perfil/changeAvatar/', agregarAvatar),
     path('perfil/editarPerfil/', editarPerfil),
     path('perfil/password/', password),
@@ -20,7 +18,6 @@ urlpatterns = [
    	path('new/', UserSearch, name='usersearch'),
    	path('new/<username>', NewConversation, name='newconversation'),
    	path('send/', SendDirect, name='send_direct'),
-    path("blogs/",blogs),
     path("add_blogs/",add_blogs),
     path("edit_blog_post/<str:slug>/", UpdatePostView.as_view(), name="edit_blog_post"),
     path('<slug:slug>/', PostDetail.as_view(), name='post_detail'),

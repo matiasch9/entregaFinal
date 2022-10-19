@@ -16,13 +16,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
-def index(request):
+def home(request):
     avatar = Avatar.objects.filter(user = request.user.id)
     try:
         avatar = avatar[0].image.url
     except:
         avatar = None
-    return render(request, 'index.html', {'avatar':avatar})
+    posts = Blog.objects.all()
+    posts = Blog.objects.filter().order_by('-publish_date')
+    return render(request, 'home.html', {'avatar':avatar,'posts':posts})
 
 @login_required
 def perfil(request):
@@ -35,14 +37,9 @@ def perfil(request):
     return render(request, 'perfil.html', {'avatar':avatar})
 
 
-def recetas(request):
-    return render(request, "recetas.html")
-
 def about(request):
     return render(request, "about.html")
 
-def create_autores(request):
-    return render(request, "CRUD/create_autores.html")
 
 def login_request(request):
     if request.method == 'POST':
@@ -60,9 +57,9 @@ def login_request(request):
                     avatar = avatar[0].image.url
                 except:
                     avatar = None
-                return render(request, 'index.html',{'avatar':avatar})
+                return redirect ('../home',{'avatar':avatar})
             else:
-                return render(request, "login.html", {'form':form})
+                return redirect ('../home',{'form':form})
         else:
             return render(request, "login.html", {'form':form})
     form = AuthenticationForm()
@@ -73,11 +70,12 @@ def registro (request):
     if request.method =='POST':
         if form.is_valid():
             form.save()
-            return(request, "login.html")
+            return redirect('../login')
+            #return render (request,"login.html")
         else:
             return render (request,"registro.html", {'form':form})
-    #form = UserRegisterForm()
-    #return render (request,"registro.html", {'form':form})
+    form = UserRegisterForm()
+    return render (request,"registro.html", {'form':form})
 
 
 @login_required
@@ -95,7 +93,7 @@ def agregarAvatar(request):
                 avatar = avatar[0].image.url
             except:
                 avatar = None           
-            return render(request, 'index.html', {'avatar': avatar})
+            return redirect('../', {'avatar': avatar})
     else:
         try:
             avatar = Avatar.objects.filter(user = request.user.id)
@@ -122,14 +120,14 @@ def editarPerfil(request):
                 avatar = avatar[0].image.url
             except:
                 avatar = None
-            return render(request, 'index.html', {'avatar': avatar})
+            return redirect('../', {'avatar': avatar})
         else:
             avatar = Avatar.objects.filter(user = request.user.id)
             try:
                 avatar = avatar[0].image.url
             except:
                 avatar = None
-            return render(request, 'index.html', {'form':form, 'avatar': avatar})
+            return redirect('../', {'form':form, 'avatar': avatar})
     else:
         form = UserEditForm(initial={'email': usuario.email, 'username': usuario.username, 'first_name': usuario.first_name, 'last_name': usuario.last_name })
     return render(request, 'editarPerfil.html', {'form': form, 'usuario': usuario})
@@ -148,7 +146,7 @@ def password(request):
                 avatar = avatar[0].image.url
             except:
                 avatar = None
-            return render(request, 'index.html', {'avatar': avatar})
+            return redirect('../', {'avatar': avatar})
     else:
         #form = PasswordChangeForm(request.user)
         form = ChangePasswordForm(user = request.user)
@@ -256,13 +254,6 @@ def checkDirects(request):
 
 	return {'directs_count':directs_count}
 
-## BLog
-def blogs(request):
-    posts = Blog.objects.all()
-    posts = Blog.objects.filter().order_by('-publish_date')
-    return render(request, "blogs.html", {'posts':posts})
-
-
 @login_required
 def add_blogs(request):
     if request.method=="POST":
@@ -273,17 +264,18 @@ def add_blogs(request):
             Blog.save()
             obj = form.instance
             alert = True
-            return render(request, "add_blogs.html",{'obj':obj, 'alert':alert})
-            success_url = "/AppGlobal/blogs"
+            return redirect('../home',{'obj':obj, 'alert':alert})
+            success_url = "/AppGlobal/home"
     else:
         form=BlogPostForm()
     return render(request, "add_blogs.html", {'form':form})
 
-class UpdatePostView(UpdateView):
+class UpdatePostView(UpdateView, LoginRequiredMixin,):
     model = Blog
     template_name = 'edit_blog_post.html'
     fields = ['titulo', 'descripcion', 'body', 'image']
-    success_url = "/AppGlobal/blogs"
+    success_url = "/AppGlobal/home"
+    login_url = '/AppGlobal/login'
 
 class PostDetail(DetailView):
     model = Blog
@@ -300,5 +292,5 @@ class DeleteBlogView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Blog
     template_name = "delete_blog.html"
     login_url = '/AppGlobal/login'
-    success_url = "/AppGlobal/blogs"
+    success_url = "/AppGlobal/home"
     success_message = "El Blog a sido eliminado"
