@@ -264,15 +264,15 @@ def add_blogs(request):
             Blog.save()
             obj = form.instance
             alert = True
-            return redirect('../home',{'obj':obj, 'alert':alert})
+            return redirect('../../home',{'obj':obj, 'alert':alert})
             success_url = "/AppGlobal/home"
     else:
         form=BlogPostForm()
-    return render(request, "add_blogs.html", {'form':form})
+    return render(request, "CRUD/add_blogs.html", {'form':form})
 
 class UpdatePostView(UpdateView, LoginRequiredMixin,):
     model = Blog
-    template_name = 'edit_blog_post.html'
+    template_name = 'CRUD/edit_blog_post.html'
     fields = ['titulo', 'descripcion', 'body', 'image']
     success_url = "/AppGlobal/home"
     login_url = '/AppGlobal/login'
@@ -285,12 +285,12 @@ class PostDetail(DetailView):
 @login_required
 def mis_blogs(request=None):
     blogs = Blog.objects.all() #Trae todo
-    return render(request, "mis_blogs.html", {"blogs": blogs})
+    return render(request, "CRUD/mis_blogs.html", {"blogs": blogs})
 
 
 class DeleteBlogView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Blog
-    template_name = "delete_blog.html"
+    template_name = "CRUD/delete_blog.html"
     login_url = '/AppGlobal/login'
     success_url = "/AppGlobal/home"
     success_message = "El Blog a sido eliminado"

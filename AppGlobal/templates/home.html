@@ -53,7 +53,7 @@
                   <h5 class="card-title">{{post.titulo}} <br><small>by {{post.author}}</small></h5>
                   <p class="card-text">{{post.descripcion| truncatechars:120}}</p>
                   <p class="card-text">{{post.body| truncatechars:120}}</p>
-                  <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Detalles {% if user.is_authenticated and user == post.author %}<a href="/AppGlobal/delete_blog/{{post.slug}}" class="btn btn-danger mx-4">Eliminar</a>{% endif %}</a>
+                  <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Detalles {% if user.is_authenticated and user == post.author %}<a href="/AppGlobal/CRUD/delete_blog/{{post.slug}}" class="btn btn-danger mx-4">Eliminar</a>{% endif %}</a>
                 </div>
               </div>
         </div>
@@ -63,3 +63,6 @@
     {% block js %} 
 <script></script>
 {% endblock %}
+<footer>
+    <p class="pFooter"> ®  Design by Matias Chavez </p>    
+    </footer>

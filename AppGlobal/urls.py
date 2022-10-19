@@ -18,10 +18,10 @@ urlpatterns = [
    	path('new/', UserSearch, name='usersearch'),
    	path('new/<username>', NewConversation, name='newconversation'),
    	path('send/', SendDirect, name='send_direct'),
-    path("add_blogs/",add_blogs),
-    path("edit_blog_post/<str:slug>/", UpdatePostView.as_view(), name="edit_blog_post"),
+    path("CRUD/add_blogs/",add_blogs),
+    path("CRUD/edit_blog_post/<str:slug>/", UpdatePostView.as_view(), name="edit_blog_post"),
     path('<slug:slug>/', PostDetail.as_view(), name='post_detail'),
-    path('perfil/mis_blogs/', mis_blogs),
-    path('delete_blog/<str:slug>/', DeleteBlogView.as_view(), name="delete_blog")
+    path('CRUD/mis_blogs/', mis_blogs),
+    path('CRUD/delete_blog/<str:slug>/', DeleteBlogView.as_view(), name="delete_blog")
 
 ]

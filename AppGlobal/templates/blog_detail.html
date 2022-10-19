@@ -16,7 +16,7 @@
         <p class=" text-muted">{{ post.author }} | {{ post.publish_date }}</p>
         <p class=" text-muted">{{ post.Descripcion }}</p>
         <p class=" text-muted">{{ post.body |linebreaks }}</p>
-        <a>{% if user.is_superuser %}<a href="../edit_blog_post/{{post.slug}}/" class="btn btn-danger mx-4">Editar Blog</a><a>{% endif %}</a>
+        <a>{% if user.is_superuser %}<a href="../../AppGlobal/CRUD/edit_blog_post/{{post.slug}}/" class="btn btn-danger mx-4">Editar Blog</a><a>{% endif %}</a>
       </div>
     </div>
   </div>
