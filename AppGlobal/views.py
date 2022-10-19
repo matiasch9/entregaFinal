@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
-from AppGlobal.models import Blog,Avatar, Autores, Message
+from AppGlobal.models import Blog,Avatar, Message
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from AppGlobal.forms import UserRegisterForm, UserEditForm, ChangePasswordForm, AvatarFormulario, BlogPostForm
-from django.contrib.auth.decorators import login_required
 from django.template import loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.db.models import Q
@@ -247,6 +246,7 @@ def SendDirect(request):
 	else:
 		HttpResponseBadRequest()
 
+@login_required
 def checkDirects(request):
 	directs_count = 0
 	if request.user.is_authenticated:
@@ -269,6 +269,7 @@ def add_blogs(request):
     else:
         form=BlogPostForm()
     return render(request, "CRUD/add_blogs.html", {'form':form})
+
 
 class UpdatePostView(UpdateView, LoginRequiredMixin,):
     model = Blog

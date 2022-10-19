@@ -15,13 +15,6 @@ class Blog(models.Model):
    author= models.ForeignKey(User, on_delete=models.CASCADE, default = '0')
    def __str__(self):
         return str(self.author) +  " Blog titulo: " + self.titulo
-   
-class Autores(models.Model):
-    username = models.CharField(max_length=50)
-    email = models.EmailField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    def __str__(self):
-        return f"username:{self.username} - email:{email}"
 
 class Avatar(models.Model):
     #vinculo con el usuario
