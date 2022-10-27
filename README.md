@@ -25,7 +25,8 @@ Desarrollo Backend: Matias Chavez
 
 ## Video explicativo:
 
-link: xxxxxxxxxxxxxxxx
+link: https://youtu.be/gr5VRDsexT4
+El usuario tester fue solo para el video, no existe en el archivo subido.
 
 ## Pruebas:
 || Paso N°. ||     Descripcion     || Resultado                                        || Ok/Error
